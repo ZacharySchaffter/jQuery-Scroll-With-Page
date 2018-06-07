@@ -1,4 +1,4 @@
-# Scroll With Content
+# Scroll With Page
 
 A basic extension that fixes an element to the top of the window once scrolled past.  It's constrained by the bottom edge of the parent element, passed as the first parameter.
 
