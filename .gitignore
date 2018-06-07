@@ -1,0 +1,7 @@
+.DS_Store
+*.sublime*
+thumbs.db
+*.log
+node_modules/
+gulpfile.js
+package.json

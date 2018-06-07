@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sample using the jQuery Scroll With Content</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../dist/scrollWithPage.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <style>
+        html,body {
+            width:100%;
+            font-family:"Roboto", sans-serif;
+
+        }
+
+        * {
+            box-sizing:border-box;
+        }
+        
+        body {
+            background:#CCC;
+            padding-bottom:500px;
+        }
+        .parent {
+            width:95%;
+            max-width:1200px;
+            padding:0px 20px;
+            margin:0 auto;
+            border:1px solid black;
+            border-radius:2px;
+            background:#FFF;
+            position:relative;
+
+        }
+
+        .parent:after {
+            content:"";
+            display:block;
+            clear:both;
+        }
+
+        .scrolling-child-row {
+            float:left;
+            width:25%;
+            position:relative;
+            min-height:1px;
+            
+        }
+
+        #scrollable {
+            padding:20px 20px 500px;
+            margin:10px auto;
+            position:relative;
+            background-color:#999;
+            border:1px solid #333;
+        }
+
+        .nonscrolling-child {
+           float:left;
+           padding:20px;
+           width:74%;
+        }
+
+        .nonscrolling-child .spacer {
+            height:1200px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        
+        <div class="scrolling-child-row">
+            <div id="scrollable">I move when the page scrolls!</div>
+        </div>
+
+        <div class="nonscrolling-child">
+            <div class="spacer">
+                Static content, the sidebar scrolls while this doesn't.
+            </div>
+
+            <div>
+                And it stops when the parent ends.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //First argument is its container, second is the offset element (such as fixed headers) that the element needs to factor in
+        $("#scrollable").scrollWithPage(".parent");
+    </script>
+</body>
+</html>
