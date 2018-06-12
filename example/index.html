@@ -9,6 +9,8 @@
     <style>
         html,body {
             width:100%;
+            padding:0;
+            margin:0;
             font-family:"Roboto", sans-serif;
 
         }
@@ -19,13 +21,14 @@
         
         body {
             background:#CCC;
+            padding:0px;
             padding-bottom:500px;
         }
         .parent {
             width:95%;
             max-width:1200px;
             padding:0px 20px;
-            margin:0 auto;
+            margin:100px auto;
             border:1px solid black;
             border-radius:2px;
             background:#FFF;
@@ -44,6 +47,7 @@
             width:25%;
             position:relative;
             min-height:1px;
+            padding:20px 0 100px;
             
         }
 
@@ -55,13 +59,13 @@
             border:1px solid #333;
         }
 
-        .nonscrolling-child {
+        .nonscrolling-child-row {
            float:left;
            padding:20px;
            width:74%;
         }
 
-        .nonscrolling-child .spacer {
+        .nonscrolling-child-row .spacer {
             height:1200px;
         }
 
@@ -75,7 +79,7 @@
             <div id="scrollable">I move when the page scrolls!</div>
         </div>
 
-        <div class="nonscrolling-child">
+        <div class="nonscrolling-child-row">
             <div class="spacer">
                 Static content, the sidebar scrolls while this doesn't.
             </div>

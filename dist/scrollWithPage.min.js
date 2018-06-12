@@ -4,7 +4,7 @@ var scrollElement = function(scrollingElement, containerElement, offsetElement){
     this.scrollingElement = scrollingElement;
 
     //Scrolling element initial position data
-    this.origOffset = scrollingElement.parent().offset().top; //original position of links by looking at the parent.
+    this.origOffset = scrollingElement.parent().offset().top; //original position of links based on parents
     this.currentPos = scrollingElement.position().top; //current relative position of links.
     this.height = scrollingElement.outerHeight(true); //height of element w/ margin
     this.width = scrollingElement.parent().width(); //width - based off parent element (since el will be fixed)
@@ -29,8 +29,6 @@ var scrollElement = function(scrollingElement, containerElement, offsetElement){
         height: window.innerHeight,
         bottom: window.innerHeight
     };   
-    
-    
 }
 
 //Initialize
@@ -86,16 +84,16 @@ scrollElement.prototype.update = function(){
     var scrollingElement = this.scrollingElement;
     var containerElement = this.container.element;
 
-    this.origOffset = scrollingElement.parent().offset().top; //original position of links by looking at the parent.
     this.currentPos = scrollingElement.position().top; //current relative position of links.
     this.height = scrollingElement.outerHeight(true); //height of element
+    
     this.width = scrollingElement.parent().width(); //width - based off parent element (since el will be fixed)
-    this.top = scrollingElement.offset().top; //current offset relative to document
+    this.top = scrollingElement.offset().top - parseInt(scrollingElement.css("marginTop")); //current offset relative to document
     this.bottom = Math.ceil( this.top + this.height );
 
     //container vars
     //var containerTop = container.offset().top;
-    this.container.height = containerElement.outerHeight();; //height of the content-wrap element
+    this.container.height = containerElement.outerHeight();; //height of the container element
     this.container.heightWithMargin = containerElement.outerHeight(true);
     this.container.bottom = this.container.height + containerElement.offset().top; //bottom of the content-wrap element
 
@@ -109,6 +107,7 @@ scrollElement.prototype.update = function(){
 
     //bottom of the viewport's relative pixel location
     this.viewport.bottom = window.innerHeight + this.distanceScrolled;
+    console.log(this);
 
     //event comparisons
     var heightDifference = this.distanceScrolled > this.top - this.offsetEl.height ? Math.floor(this.distanceScrolled - this.top) : 0;
@@ -136,24 +135,23 @@ scrollElement.prototype.update = function(){
             //Normal position
             this.changePosition("relative", "auto", "auto");
         } else if (isTallerThanViewport) {
-            console.log(this.currentPos);
-            console.log(this.top);
-            console.log("--------");
+            console.log(this.top, this.origOffset, parseInt(scrollingElement.css("marginTop")));
             if (this.distanceScrolled <= this.top && this.scrollDir === "up") {
                 console.log("up");
                 this.changePosition("fixed", 0, "auto", this.width);
             } else if ( this.viewport.bottom >= this.bottom && this.scrollDir === "down") {
                 console.log("down");
                 this.changePosition("fixed", "auto", 0, this.width);
+            } else if ( this.scrollingElement.css('position') === "fixed" ) {
+                this.changePosition("absolute", (this.top - this.origOffset), "auto", this.width);
             } else {
-                console.log("else");
-                this.changePosition("absolute", 0, "auto", this.width);
+                console.log("Did nothing");
             }
-
-            console.log(this.scrollingElement.offset().top);
         } else {
             this.changePosition("fixed", this.offsetEl.height, "auto", this.width); 
         }
+
+        console.log("--------");
     }
 }
 
