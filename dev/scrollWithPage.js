@@ -107,7 +107,6 @@ scrollElement.prototype.update = function(){
 
     //bottom of the viewport's relative pixel location
     this.viewport.bottom = window.innerHeight + this.distanceScrolled;
-    console.log(this);
 
     //event comparisons
     var heightDifference = this.distanceScrolled > this.top - this.offsetEl.height ? Math.floor(this.distanceScrolled - this.top) : 0;
@@ -135,23 +134,17 @@ scrollElement.prototype.update = function(){
             //Normal position
             this.changePosition("relative", "auto", "auto");
         } else if (isTallerThanViewport) {
-            console.log(this.top, this.origOffset, parseInt(scrollingElement.css("marginTop")));
-            if (this.distanceScrolled <= this.top && this.scrollDir === "up") {
-                console.log("up");
+            if (this.distanceScrolled + this.offsetEl.height <= this.top && this.scrollDir === "up") {
                 this.changePosition("fixed", 0, "auto", this.width);
             } else if ( this.viewport.bottom >= this.bottom && this.scrollDir === "down") {
-                console.log("down");
                 this.changePosition("fixed", "auto", 0, this.width);
             } else if ( this.scrollingElement.css('position') === "fixed" ) {
                 this.changePosition("absolute", (this.top - this.origOffset), "auto", this.width);
             } else {
-                console.log("Did nothing");
             }
         } else {
             this.changePosition("fixed", this.offsetEl.height, "auto", this.width); 
         }
-
-        console.log("--------");
     }
 }
 
