@@ -157,14 +157,20 @@ scrollElement.prototype.update = function(){
 
 $.fn.scrollWithPage = function(scrollContainer, offsetEl) {
     var $scrollingElement = $(this); //the element that will be scrolling with the page
-    var $containerElement = $(this).closest(scrollContainer); //the parent container element that should be used to determine the outer bounds
+    var $containerElement = $(scrollContainer); //the parent container element that should be used to determine the outer bounds
     var $offsetElement = offsetEl ? $(offsetEl) : null; //The offset element is used to keep the nav lower than another fixed element (for instance, the header);
 
-    if (!$containerElement){
-        throw "Container doesn't exist";
-    } else if (!$scrollingElement) {
-        throw "Element doesn't exist";
-    } 
+    //Make sure elements exist
+    try {
+        if (!$containerElement || $containerElement[0] == undefined){
+            throw new Error("ScrollWithPage: Container doesn't exist");
+        } else if (!$scrollingElement || $scrollingElement[0] == undefined) {
+            throw new Error("ScrollWithPage: Element doesn't exist");
+        } 
+    } catch(err) {
+        console.error(err);
+        return;
+    }
 
     //Initialize the scrolling object
     var scrollObj = new scrollElement($scrollingElement, $containerElement, $offsetElement);
